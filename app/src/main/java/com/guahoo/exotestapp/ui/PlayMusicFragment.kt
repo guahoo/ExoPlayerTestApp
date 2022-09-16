@@ -28,7 +28,6 @@ class PlayMusicFragment : Fragment() {
 
     private var localAudioService: AudioPlayerService? = null
     private var mBound = false
-    private var intent: Intent? = null
     private lateinit var viewModel: PlayMusicViewModel
 
     private val mConnection: ServiceConnection = object : ServiceConnection {
@@ -55,6 +54,7 @@ class PlayMusicFragment : Fragment() {
         if (mBound) {
             val player: ExoPlayer? = localAudioService?.getPlayerInstance()
             exoplayerview.player = player
+
         }
     }
 
@@ -66,45 +66,23 @@ class PlayMusicFragment : Fragment() {
         }
     }
 
-
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[PlayMusicViewModel::class.java]
+        viewModel.fetchTracks()
         exoplayerview.useController = true
+        exoplayerview.controllerShowTimeoutMs = 0
         exoplayerview.showController()
         exoplayerview.controllerAutoShow = true
         exoplayerview.controllerHideOnTouch = false
 
-
-
     }
-
-
-
-
 
     override fun onStart() {
         super.onStart()
-        Intent(requireContext(), AudioPlayerService::class.java).also { intent ->
-            requireActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
-        }
-
-
+            Intent(requireContext(), AudioPlayerService::class.java).also { intent ->
+                requireActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE)
+            }
     }
 
-
-    override fun onResume() {
-        viewModel.fetchTracks()
-        super.onResume()
-
-    }
-
-
-
-    override fun onStop() {
-//        requireActivity().unbindService(mConnection)
-//        mBound = false
-        super.onStop()
-    }
 }
