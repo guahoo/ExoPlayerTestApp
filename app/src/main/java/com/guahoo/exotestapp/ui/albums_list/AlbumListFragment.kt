@@ -12,20 +12,29 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.guahoo.exotestapp.R
+import com.guahoo.exotestapp.databinding.AlbumItemBinding
+import com.guahoo.exotestapp.models.AlbumDataModel
 import com.guahoo.exotestapp.ui.albums_list.adapters.AlbumsAdapter
+import com.guahoo.exotestapp.ui.track_list.TrackListFragmentDirections
 import kotlinx.android.synthetic.main.fragment_album_list.*
 import kotlinx.coroutines.launch
 
 class AlbumListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = AlbumListFragment()
+
+    private val albumAdapter = AlbumsAdapter { album ->
+        Log.v("AlbumListFragment", "Clicked")
+        findNavController().navigate(
+            AlbumListFragmentDirections.actionAlbumListFragmentToTrackListFragment(
+                albumid = album.id?.toInt() ?: 0
+            )
+        )
     }
-    private val albumAdapter = AlbumsAdapter()
     private lateinit var viewModel: AlbumListViewModel
 
     private val refreshListener = SwipeRefreshLayout.OnRefreshListener {
@@ -67,9 +76,9 @@ class AlbumListFragment : Fragment() {
             if (loadState.refresh is LoadState.Loading ||
                 loadState.append is LoadState.Loading
             )
-                progressDialog.isVisible = true
+                progressDialog?.isVisible = true
             else {
-                progressDialog.isVisible = false
+                progressDialog?.isVisible = false
                 // If we have an error, show a toast
                 val errorState = when {
                     loadState.append is LoadState.Error -> loadState.append as LoadState.Error
@@ -93,5 +102,12 @@ class AlbumListFragment : Fragment() {
         }
 
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        albumAdapter.addLoadStateListener {  }
+    }
+
+
 
 }

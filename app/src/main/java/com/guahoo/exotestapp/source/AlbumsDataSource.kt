@@ -1,10 +1,8 @@
 package com.guahoo.exotestapp.source
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.guahoo.exotestapp.models.AlbumDataModel
-import com.guahoo.exotestapp.models.AlbumModel
 import com.guahoo.exotestapp.network.AppApi
 
 

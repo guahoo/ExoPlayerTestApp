@@ -13,5 +13,23 @@
         android:id="@+id/albumListFragment"
         android:name="com.guahoo.exotestapp.ui.albums_list.AlbumListFragment"
         android:label="fragment_album_list"
-        tools:layout="@layout/fragment_album_list" />
+        tools:layout="@layout/fragment_album_list" >
+        <action
+            android:id="@+id/action_albumListFragment_to_trackListFragment"
+            app:destination="@id/trackListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trackListFragment"
+        android:name="com.guahoo.exotestapp.ui.track_list.TrackListFragment"
+        android:label="fragment_track_list"
+        tools:layout="@layout/fragment_track_list" >
+
+        <argument
+            android:name="albumid"
+            app:argType="integer"/>
+
+        <action
+            android:id="@+id/action_trackListFragment_to_playMusicFragment"
+            app:destination="@id/playMusicFragment" />
+    </fragment>
 </navigation>

@@ -1,23 +1,63 @@
 package com.guahoo.exotestapp.repository
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.MediaItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import com.guahoo.exotestapp.extensions.AppResult
+import com.guahoo.exotestapp.extensions.handleApiError
+import com.guahoo.exotestapp.extensions.handleSuccess
+import com.guahoo.exotestapp.models.TrackDataModel
+import com.guahoo.exotestapp.models.TrackRequestModel
+import com.guahoo.exotestapp.network.AppApi
+import kotlinx.coroutines.*
 
-class TracksRepository: ITracksRepository {
+class TracksRepository(private val api: AppApi): ITracksRepository {
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     private val tracks = MutableLiveData<MutableList<MediaItem>>()
+    private val tracksInfo = MutableLiveData<MutableList<TrackDataModel>>()
 
     override fun getFetchedTracks(): MutableLiveData<MutableList<MediaItem>> {
         return tracks
     }
 
-    override fun fetchTracks(){
+    override fun getTracksInfo(): MutableLiveData<MutableList<TrackDataModel>> {
+        return tracksInfo
+    }
+
+    override fun invalidateTracks(){
+        tracksInfo.postValue(mutableListOf())
+    }
+
+    override suspend fun fetchTrackInfo(idAlbum: Int): AppResult<TrackRequestModel> =
+        coroutineScope {
+            return@coroutineScope try {
+                val request = api.getTracksInfo(productId = idAlbum)
+
+                if (request.isSuccessful) {
+                    tracksInfo.postValue(request.body()?.let { convertingTrackRequestModel(it) })
+                    handleSuccess(request)
+
+                } else {
+                    handleApiError(request)
+                }
+            } catch (e: Exception) {
+                AppResult.Error(e)
+            }
+        }
+
+
+    private fun convertingTrackRequestModel(requestModel: TrackRequestModel): MutableList<TrackDataModel> {
+        Log.v("Repos123","${requestModel.collection.track.size}")
+        return requestModel.collection.track.values.toMutableList()
+    }
+
+
+
+
+
+    override suspend fun fetchTracks(){
         scope.launch {
             /**
              * адреса треков будут приходить из вьюмодели и скачиваться

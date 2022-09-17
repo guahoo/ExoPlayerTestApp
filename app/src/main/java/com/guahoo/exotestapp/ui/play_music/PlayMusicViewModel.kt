@@ -19,7 +19,10 @@ class PlayMusicViewModel : ViewModel(), KoinComponent {
     }
 
     fun fetchTracks(){
-        trackRepository.fetchTracks()
+        viewModelScope.launch(Dispatchers.IO) {
+            trackRepository.fetchTracks()
+        }
+
     }
 }
 

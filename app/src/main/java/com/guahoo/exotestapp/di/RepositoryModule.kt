@@ -8,12 +8,12 @@ import com.guahoo.exotestapp.repository.TracksRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    fun provideTrackRepository(): ITracksRepository {
-        return TracksRepository()
+    fun provideTrackRepository(api: AppApi): ITracksRepository {
+        return TracksRepository(api)
     }
 
     single {
-        provideTrackRepository()
+        provideTrackRepository(get())
     }
 
     fun provideAlbumRepository(api: AppApi): IAlbumsRepository {
