@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
 
     android:id="@+id/main_layout"
-    tools:context=".ui.PlayMusicFragment">
+    tools:context=".ui.play_music.PlayMusicFragment">
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:layout_width="wrap_content"

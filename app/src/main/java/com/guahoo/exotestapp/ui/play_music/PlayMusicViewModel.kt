@@ -1,4 +1,4 @@
-package com.guahoo.exotestapp.ui
+package com.guahoo.exotestapp.ui.play_music
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

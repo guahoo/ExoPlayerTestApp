@@ -1,9 +1,10 @@
 package com.guahoo.exotestapp.di
 
-import android.content.Context
+import com.guahoo.exotestapp.network.AppApi
+import com.guahoo.exotestapp.repository.AlbumRepository
+import com.guahoo.exotestapp.repository.IAlbumsRepository
 import com.guahoo.exotestapp.repository.ITracksRepository
 import com.guahoo.exotestapp.repository.TracksRepository
-import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -13,5 +14,13 @@ val repositoryModule = module {
 
     single {
         provideTrackRepository()
+    }
+
+    fun provideAlbumRepository(api: AppApi): IAlbumsRepository {
+        return AlbumRepository(api)
+    }
+
+    single {
+       provideAlbumRepository(get())
     }
 }

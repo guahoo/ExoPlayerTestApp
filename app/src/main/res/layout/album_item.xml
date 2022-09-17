@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movie"
+            type="com.guahoo.exotestapp.models.AlbumDataModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:id="@+id/iv_album_cover"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/tv_album_title"
+                android:layout_marginBottom="4dp"
+                app:layout_constraintDimensionRatio="W,1:0.8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                 />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_album_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="start|center_vertical"
+                android:text="@{movie.name}"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:lines="2"
+                android:maxLines="2"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeMaxTextSize="16sp"
+                app:autoSizeTextType="uniform"
+                app:layout_constraintBottom_toTopOf="@+id/tv_year"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:lineHeight="18dp"
+                tools:text="Название альбома" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_creator"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="start|center_vertical"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tv_track_count"
+                app:layout_constraintStart_toStartOf="parent"
+                app:lineHeight="14dp"
+                tools:drawableTint="@color/active_dot_pb"
+                tools:text="Вася" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_track_count"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="end|center_vertical"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_creator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_creator"
+                app:lineHeight="14dp"
+                tools:drawableTint="@color/active_dot_pb"
+                tools:text="15" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="start|center_vertical"
+                android:textSize="15sp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_creator"
+                app:lineHeight="14dp"
+                tools:drawableTint="@color/active_dot_pb"
+                tools:text="2022" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
