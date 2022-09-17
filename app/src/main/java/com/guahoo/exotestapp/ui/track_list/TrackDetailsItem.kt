@@ -8,13 +8,20 @@ import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import com.xwray.groupie.kotlinandroidextensions.Item
 import kotlinx.android.synthetic.main.track_details_item.view.*
 
-class TrackDetailsItem(val trackModel: TrackDataModel): Item() {
+class TrackDetailsItem(val trackModel: TrackDataModel,
+                       val onComplete: (TrackDataModel) -> Unit
+) :
+    Item() {
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         viewHolder.itemView.apply {
             tv_track_title.text = trackModel.name
             tv_track_lenght.text = convertSeconds(trackModel.duration.toInt())
 
-            iv_track_cover.loadGlidePhotoCard(trackModel.coverUrl?:"")
+            iv_track_cover.loadGlidePhotoCard(trackModel.coverUrl ?: "")
+
+            this.setOnClickListener {
+                onComplete(trackModel)
+            }
         }
     }
 

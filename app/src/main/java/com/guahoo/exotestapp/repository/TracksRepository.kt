@@ -4,6 +4,7 @@ package com.guahoo.exotestapp.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.MediaMetadata
 import com.guahoo.exotestapp.extensions.AppResult
 import com.guahoo.exotestapp.extensions.handleApiError
 import com.guahoo.exotestapp.extensions.handleSuccess
@@ -17,6 +18,15 @@ class TracksRepository(private val api: AppApi): ITracksRepository {
 
     private val tracks = MutableLiveData<MutableList<MediaItem>>()
     private val tracksInfo = MutableLiveData<MutableList<TrackDataModel>>()
+    private val currentMediaMetadata = MutableLiveData<MediaMetadata?>()
+
+    override fun renewCurrentMetaData(mediaMetadata: MediaMetadata?){
+        currentMediaMetadata.postValue(mediaMetadata)
+    }
+
+
+    override fun getCurrentMetaData() = currentMediaMetadata
+
 
     override fun getFetchedTracks(): MutableLiveData<MutableList<MediaItem>> {
         return tracks

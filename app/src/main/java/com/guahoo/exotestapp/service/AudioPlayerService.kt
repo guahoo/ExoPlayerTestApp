@@ -25,7 +25,7 @@ import org.koin.core.component.get
 import java.util.*
 
 
-class AudioPlayerService : LifecycleService(), KoinComponent {
+class AudioPlayerService() : LifecycleService(), KoinComponent {
     private val trackRepository: ITracksRepository = get()
 
 
@@ -87,6 +87,7 @@ class AudioPlayerService : LifecycleService(), KoinComponent {
             object : PlayerNotificationManager.MediaDescriptionAdapter {
 
                 override fun getCurrentContentTitle(player: Player): CharSequence {
+                    trackRepository.renewCurrentMetaData(getPlayerInstance()?.mediaMetadata)
                     return getPlayerInstance()?.mediaMetadata?.title ?: ""
                 }
 
@@ -152,4 +153,9 @@ class AudioPlayerService : LifecycleService(), KoinComponent {
     }
 
 
+
+
+
 }
+
+

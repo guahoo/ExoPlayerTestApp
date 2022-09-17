@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.guahoo.exotestapp.R
 import com.guahoo.exotestapp.models.TrackDataModel
+import com.guahoo.exotestapp.ui.play_music.PlayMusicFragment
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_track_list.*
@@ -34,7 +35,6 @@ class TrackListFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(TrackListViewModel::class.java)
 
         initList()
-
 
         rv_tracks.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -60,14 +60,19 @@ class TrackListFragment : Fragment() {
     }
 
     private fun initList() {
-
         tracksAdapter.clear()
         viewModel.fetchTrackInfo(trackId = args.albumid)
     }
 
     private fun MutableList<TrackDataModel>.toTrackDetailListItems(): List<TrackDetailsItem>{
         return this.map {
-            TrackDetailsItem(trackModel = it)
+            TrackDetailsItem(trackModel = it){
+                val playMusicFragment = PlayMusicFragment(it)
+                playMusicFragment.show(
+                    requireActivity().supportFragmentManager,
+                    "PlayMusicFragment"
+                )
+            }
         }
     }
 
