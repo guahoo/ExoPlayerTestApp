@@ -54,13 +54,12 @@ class AlbumsAdapter(val onClick:(AlbumDataModel) -> Unit): PagingDataAdapter<Alb
                onClick(item)
             }
         }
-
-
     }
 
     object AlbumComparator : DiffUtil.ItemCallback<AlbumDataModel>() {
-        override fun areItemsTheSame(oldItem: AlbumDataModel, newItem: AlbumDataModel) =
-            false
+        override fun areItemsTheSame(oldItem: AlbumDataModel, newItem: AlbumDataModel): Boolean {
+            return oldItem.id == newItem.id
+        }
 
         override fun areContentsTheSame(oldItem: AlbumDataModel, newItem: AlbumDataModel) =
             oldItem == newItem

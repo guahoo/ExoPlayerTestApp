@@ -1,12 +1,15 @@
 package com.guahoo.exotestapp.ui.track_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.guahoo.exotestapp.R
@@ -41,7 +44,25 @@ class TrackListFragment : Fragment() {
             adapter = tracksAdapter
         }
 
+        btn_back.setOnClickListener {
+            viewModel.trackRepository.invalidateTracks()
+            findNavController().navigateUp()        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+
+            override fun handleOnBackPressed() {
+                viewModel.trackRepository.invalidateTracks()
+                findNavController().navigateUp()
+            }
+
+        })
+
+
+
+
         viewModel.getTracksInfo().observe(viewLifecycleOwner){ trackList->
+
+            Log.v("TrackList", "${trackList.size}")
 
             tracksAdapter.clear()
             tracksAdapter.addAll(trackList.toTrackDetailListItems())
@@ -76,10 +97,5 @@ class TrackListFragment : Fragment() {
         }
     }
 
-    override fun onDestroy() {
-        viewModel.invalidateTracks()
-        viewModelStore.clear()
-        super.onDestroy()
 
-    }
 }

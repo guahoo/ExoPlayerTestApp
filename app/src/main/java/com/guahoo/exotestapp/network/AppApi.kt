@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface AppApi {
     @GET("?method=product.getNews")
     suspend fun getAllAlbums(
-        @Query("limit") limit: Int = 3,
+        @Query("limit") limit: Int = 2,
         @Query("page") page: Int
     ): Response<AlbumRequestModel>
 

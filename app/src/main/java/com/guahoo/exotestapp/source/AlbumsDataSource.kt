@@ -13,7 +13,9 @@ class AlbumsDataSource (private val apiService: AppApi): PagingSource<Int, Album
                 val position = params.key ?: 1
                 val response = apiService.getAllAlbums(page = position)
 
-                LoadResult.Page(data = response.body()!!.collection.album.values.toList(), prevKey = if (position == 1) null else position - 1,
+                LoadResult.Page(data = response.body()!!.collection.album.values.toList(),
+                    prevKey = if (position == 1) null
+                    else position - 1,
                     nextKey = position + 1)
 
             } catch (e: Exception) {

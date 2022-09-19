@@ -17,6 +17,12 @@ class TrackDetailsItem(val trackModel: TrackDataModel,
             tv_track_title.text = trackModel.name
             tv_track_lenght.text = convertSeconds(trackModel.duration.toInt())
 
+
+            /**
+             * пробовал добавлять базовый адрес к адресу, приходящему в поле cover - ни один из адресов не сработал
+             * поэтому изображение грузится из поля coverUrl
+             */
+
             iv_track_cover.loadGlidePhotoCard(trackModel.coverUrl ?: "")
 
             this.setOnClickListener {

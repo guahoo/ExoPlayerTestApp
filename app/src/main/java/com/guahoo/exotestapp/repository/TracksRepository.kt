@@ -1,7 +1,5 @@
 package com.guahoo.exotestapp.repository
 
-
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.MediaMetadata
@@ -59,13 +57,8 @@ class TracksRepository(private val api: AppApi): ITracksRepository {
 
 
     private fun convertingTrackRequestModel(requestModel: TrackRequestModel): MutableList<TrackDataModel> {
-        Log.v("Repos123","${requestModel.collection.track.size}")
         return requestModel.collection.track.values.toMutableList()
     }
-
-
-
-
 
     override suspend fun fetchTracks(){
         scope.launch {
@@ -75,7 +68,6 @@ class TracksRepository(private val api: AppApi): ITracksRepository {
             val urlList = listOf(
                 "https://storage.enazamusic.com/files/vacancy/test-files/file_example_MP3_5MG.mp3",
                 "https://storage.enazamusic.com/files/vacancy/test-files/file_example_MP3_2MG.mp3",
-                "https://ru.drivemusic.me/dl/71qtAH3-6DvVuGHpk3VDBw/1663276548/download_music/2014/05/nico-vinz-am-i-wrong.mp3"
             )
 
 

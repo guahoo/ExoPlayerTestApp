@@ -41,8 +41,8 @@ val networkModule = module {
         val okHttpClient =
             OkHttpClient.Builder()
 
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(120, TimeUnit.SECONDS)
+                .connectTimeout(120, TimeUnit.SECONDS)
                 .addInterceptor(httpLogging)
                 .protocols(listOf(Protocol.HTTP_1_1))
                 .build()

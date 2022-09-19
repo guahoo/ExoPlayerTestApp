@@ -8,19 +8,20 @@ import androidx.paging.liveData
 import com.guahoo.exotestapp.models.AlbumDataModel
 import com.guahoo.exotestapp.network.AppApi
 import com.guahoo.exotestapp.source.AlbumsDataSource
+import kotlinx.coroutines.flow.Flow
 
 class AlbumRepository(val api: AppApi): IAlbumsRepository {
 
-    override fun getAlbums(): LiveData<PagingData<AlbumDataModel>> {
+    override fun getAlbums(): Flow<PagingData<AlbumDataModel>> {
 
         return Pager(
             config = PagingConfig(
-                pageSize = 5,
-                enablePlaceholders = true
+                pageSize = 3,
+                enablePlaceholders = false
             ),
             pagingSourceFactory = {
                AlbumsDataSource(api)
             }
-        ).liveData
+        ).flow
     }
 }

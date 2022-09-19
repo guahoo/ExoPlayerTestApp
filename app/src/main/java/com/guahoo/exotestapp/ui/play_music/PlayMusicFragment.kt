@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.util.Util
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -20,11 +21,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.guahoo.exotestapp.R
 import com.guahoo.exotestapp.extensions.loadGlidePhotoCard
 import com.guahoo.exotestapp.models.TrackDataModel
-import com.guahoo.exotestapp.service.AudioPlayerService
+import com.guahoo.exotestapp.ui.service.AudioPlayerService
+import com.guahoo.exotestapp.ui.track_list.TrackListFragmentDirections
 import kotlinx.android.synthetic.main.fragment_play_music.*
+import kotlinx.android.synthetic.main.fragment_track_list.*
 
 
-class PlayMusicFragment(val trackModel: TrackDataModel) : BottomSheetDialogFragment() {
+class PlayMusicFragment(private val trackModel: TrackDataModel) : BottomSheetDialogFragment() {
 
     private var localAudioService: AudioPlayerService? = null
     private var mBound = false
@@ -79,19 +82,16 @@ class PlayMusicFragment(val trackModel: TrackDataModel) : BottomSheetDialogFragm
         exoplayerview.controllerAutoShow = true
         exoplayerview.controllerHideOnTouch = false
 
-
         prepareUI()
 
     }
 
     private fun prepareUI() {
         iv_current_track_cover.loadGlidePhotoCard(trackModel.coverUrl)
-
         viewModel.currentMetaData().observe(viewLifecycleOwner) { currentMeta ->
             tv_cur_track_album_title.text = currentMeta?.title
             tv_cur_track_author_name.text = currentMeta?.artist
         }
-
     }
 
     override fun onStart() {

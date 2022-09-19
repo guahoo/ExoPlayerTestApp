@@ -17,6 +17,10 @@
         <action
             android:id="@+id/action_albumListFragment_to_trackListFragment"
             app:destination="@id/trackListFragment" />
+        <argument
+            android:name="from_track_list_fragment"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/trackListFragment"
@@ -27,9 +31,9 @@
         <argument
             android:name="albumid"
             app:argType="integer"/>
-
         <action
-            android:id="@+id/action_trackListFragment_to_playMusicFragment"
-            app:destination="@id/playMusicFragment" />
+            android:id="@+id/action_trackListFragment_to_albumListFragment"
+            app:destination="@id/albumListFragment" />
+
     </fragment>
 </navigation>

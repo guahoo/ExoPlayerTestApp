@@ -1,4 +1,4 @@
-package com.guahoo.exotestapp.service
+package com.guahoo.exotestapp.ui.service
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -79,8 +79,6 @@ class AudioPlayerService() : LifecycleService(), KoinComponent {
     }
 
     private fun startPlayer() {
-
-
         playerNotificationManager = PlayerNotificationManager.Builder(this,
             101,
             "channelId",
@@ -139,6 +137,7 @@ class AudioPlayerService() : LifecycleService(), KoinComponent {
             setUsePreviousActionInCompactView(true)
             setUsePlayPauseActions(true)
             setPlayer(player)
+            setPriority(NotificationCompat.PRIORITY_MAX)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
         }
